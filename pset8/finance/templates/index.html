@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Symbol</th>
+                <th scope="col">Name</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Price</th>
+                <th scope="col">TOTAL</th>
+                <th scope="col">Buy</th>
+                <th scope="col">Sell</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+                <tr class = "thead-light">
+                    <th>{{ stock["symbol"] }}</th>
+                    <th>{{ stock["name"] }}</th>
+                    <th>{{ stock["shares"] }}</th>
+                    <th>{{ stock["price"] }}</th>
+                    <th>{{ stock["TOTAL"] }}</th>
+                    <th>
+                        <form action="/buy" method="post">
+                            <input type="hidden" name="symbol" value="{{ stock["symbol"] }}">
+                            <div class="form-group">
+                                <input autocomplete="off" class="form-control" name="shares" placeholder="Shares" type="text">
+                            </div>
+                            <button class="btn btn-primary" type="submit">Buy</button>
+                        </form>
+                    </th>
+                    <th>
+                        <form action="/sell" method="post">
+                            <input type="hidden" name="symbol" value="{{ stock["symbol"] }}">
+                            <div class="form-group">
+                                <input autocomplete="off" class="form-control" name="shares" placeholder="Shares" type="text">
+                            </div>
+                            <button class="btn btn-primary" type="submit">Sell</button>
+                        </form>
+                    </th>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th>CASH</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>{{ cash }}</th>
+            </tr>
+            <tr>
+                <th></th><th></th><th></th><th></th>
+                <th>{{ total }}</th>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
